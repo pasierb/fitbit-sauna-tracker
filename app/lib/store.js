@@ -1,4 +1,5 @@
 import { readFileSync, existsSync, writeFileSync } from "fs";
+import { peerSocket } from "messaging";
 
 const fileName = "measurements.json";
 
@@ -13,6 +14,14 @@ if (!existsSync(fileName)) {
  * @property {"hot" | "cold"} measurementType
  * @property {boolean} isSynced - Whether or not the measurement has been synced to the server
  */
+
+/**
+ * @param {Measurement} measurement
+ * @returns {boolean}
+ */
+function isMeasurementRecent(measurement) {
+  return Date.now() - measurement.startedAt < maxLookupTimeInSeconds * 1000;
+}
 
 export class Store {
   constructor() {
@@ -29,6 +38,12 @@ export class Store {
   storeMeasurement = (measurement) => {
     this.measurements.push(measurement);
     writeFileSync(fileName, JSON.stringify(this.measurements), "json");
+  };
+
+  syncToDevice = () => {
+    if (peerSocket.readyState === peerSocket.OPEN) {
+      peerSocket.send(this.measurements);
+    }
   };
 }
 

@@ -1,5 +1,11 @@
-<svg id="timerView">
-  <use id="stopBtn" href="#icon-button" x="50% - 66" y="10%"
-    class="extra-large-button application-fill plus-button" />
-  <text id="status" text-length="32">Hello</text>
+<svg id="timerView" class="full-size" viewport-fill="black">
+  <use id="stopBtn" href="#icon-button" x="50% - 66" y="50% - 66"
+    class="extra-large-button" />
+
+  <text id="status"
+    class="center-text p1"
+    text-length="5"
+    x="50%" y="65% + 66">
+    Hello
+  </text>
 </svg>

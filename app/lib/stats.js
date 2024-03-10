@@ -1,6 +1,34 @@
 import { Store } from "./store";
 
-const maxLookupTimeInSeconds = 60 * 60 * 3;
+/**
+ * @type {number} - The maximum time in seconds to look back for recent measurements.
+ */
+const maxLookupTimeInSeconds = 60 * 60 * 3; // 3 hours.
+
+const duration7Days = 60 * 60 * 24 * 7 * 1000;
+const duration12Hours = 60 * 60 * 12 * 1000;
+
+class AggregateStats {
+  /**
+   *
+   * @param {import("./store").Measurement[]} measurements
+   */
+  constructor(measurements) {
+    this.measurements = measurements;
+  }
+
+  get coldTotal() {
+    return this.measurements
+      .filter((measurement) => measurement.measurementType === "cold")
+      .reduce((acc, measurement) => acc + measurement.totalElapsedSeconds, 0);
+  }
+
+  get hotTotal() {
+    return this.measurements
+      .filter((measurement) => measurement.measurementType === "hot")
+      .reduce((acc, measurement) => acc + measurement.totalElapsedSeconds, 0);
+  }
+}
 
 export class Stats {
   /**
@@ -11,22 +39,29 @@ export class Stats {
     this.store = store;
   }
 
-  get recentMeasurements() {
-    return this.store.measurements.filter(
-      (measurement) =>
-        Date.now() - measurement.startedAt < maxLookupTimeInSeconds * 1000
+  get now() {
+    return Date.now();
+  }
+
+  /**
+   * @type {AggregateStats}
+   */
+  get last7Days() {
+    return new AggregateStats(
+      this.store.measurements.filter(
+        (measurement) => measurement.startedAt > this.now - duration7Days
+      )
     );
   }
 
-  get coldTotal() {
-    return this.store.measurements
-      .filter((measurement) => measurement.measurementType === "cold")
-      .reduce((acc, measurement) => acc + measurement.totalElapsedSeconds, 0);
-  }
-
-  get hotTotal() {
-    return this.store.measurements
-      .filter((measurement) => measurement.measurementType === "hot")
-      .reduce((acc, measurement) => acc + measurement.totalElapsedSeconds, 0);
+  /**
+   * @type {AggregateStats}
+   */
+  get recent() {
+    return new AggregateStats(
+      this.store.measurements.filter(
+        (measurement) => measurement.startedAt > this.now - duration12Hours
+      )
+    );
   }
 }

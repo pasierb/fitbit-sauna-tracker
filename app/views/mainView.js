@@ -18,10 +18,10 @@ export class MainView extends View {
       .getElementById("coldBtn")
       .addEventListener("click", this.handleColdBtnClick);
     document.getElementById("hotTotal").text = formatElapsedTime(
-      this.stats.hotTotal
+      this.stats.recent.hotTotal
     );
     document.getElementById("coldTotal").text = formatElapsedTime(
-      this.stats.coldTotal
+      this.stats.recent.coldTotal
     );
   };
 

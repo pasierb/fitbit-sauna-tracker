@@ -1,25 +1,18 @@
-.defaultText {
-  font-size: 32;
-  font-family: System-Regular;
-  font-weight: regular;
-  text-length: 32;
-  fill: red;
+#timerView.hot #stopBtn {
+  fill: salmon;
 }
 
-#timerView.hot {
-  viewport-fill: pink;
-}
-
-#timerView.cold {
-  viewport-fill: violet;
+#timerView.cold #stopBtn {
+  fill: skyblue;
 }
 
 .measurement-total {
-  font-size: 32;
+  /* font-size: 32;
   font-family: System-Regular;
   font-weight: regular;
+   */
   text-length: 32;
-  fill: red;
+  fill: white;
 }
 
 #status {
@@ -29,13 +22,25 @@
 }
 
 #hotBtn {
-  fill: red;
+  fill: salmon;
+}
+
+#hotBtn #image {
+  href: "icons/sauna_icon.png";
 }
 
 #coldBtn {
-  fill: blue;
+  fill: skyblue;
 }
 
-#stopBtn {
+#coldBtn #image {
+  href: "icons/shower.png";
+}
+
+/* #stopBtn {
   fill: green;
+} */
+
+#stopBtn #image {
+  href: "icons/stop-button.png";
 }
