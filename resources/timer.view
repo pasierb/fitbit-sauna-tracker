@@ -1,0 +1,5 @@
+<svg id="timerView">
+  <use id="stopBtn" href="#icon-button" x="50% - 66" y="10%"
+    class="extra-large-button application-fill plus-button" />
+  <text id="status" text-length="32">Hello</text>
+</svg>

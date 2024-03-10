@@ -1,0 +1,41 @@
+.defaultText {
+  font-size: 32;
+  font-family: System-Regular;
+  font-weight: regular;
+  text-length: 32;
+  fill: red;
+}
+
+#timerView.hot {
+  viewport-fill: pink;
+}
+
+#timerView.cold {
+  viewport-fill: violet;
+}
+
+.measurement-total {
+  font-size: 32;
+  font-family: System-Regular;
+  font-weight: regular;
+  text-length: 32;
+  fill: red;
+}
+
+#status {
+  fill: white;
+  y: 80%;
+  x: 10%;
+}
+
+#hotBtn {
+  fill: red;
+}
+
+#coldBtn {
+  fill: blue;
+}
+
+#stopBtn {
+  fill: green;
+}

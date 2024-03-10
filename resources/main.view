@@ -1,0 +1,7 @@
+<svg viewport-fill="black">
+  <use id="hotBtn" href="#icon-button" x="10%" y="50% - 66" class="extra-large-button application-fill plus-button" />
+  <text id="hotTotal" class="measurement-total" x="10%" y="60% + 66"></text>
+
+  <use id="coldBtn" href="#icon-button" x="60%" y="50% - 66" class="extra-large-button application-fill plus-button" />
+  <text id="coldTotal" class="measurement-total" x="60%" y="60% + 66"></text>
+</svg>
