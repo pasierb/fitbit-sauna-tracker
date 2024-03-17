@@ -19,7 +19,7 @@
 
     <use href="#scrollview-item">
       <svg class="horizontal-pad">
-        <section y="20%" class="horizontal-pad" id="aggregated7days">
+        <section y="20%" class="horizontal-pad" id="aggThisWeek">
           <text fill="gray" y="0" class="p2">This week</text>
           <section width="50%" x="0" y="40">
             <circle cx="16" cy="-12" r="16" class="hot-fill" />
@@ -31,7 +31,7 @@
           </section>
         </section>
 
-        <section y="50%" class="horizontal-pad" id="aggregated14days">
+        <section y="50%" class="horizontal-pad" id="aggPrevWeek">
           <text fill="gray" y="0" class="p2">Previous week</text>
           <section width="50%" x="0" y="40">
             <circle cx="16" cy="-12" r="16" class="hot-fill" />

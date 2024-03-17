@@ -29,7 +29,8 @@ export class MainView extends View {
     document.getElementById("coldTotal").text = formatElapsedTime(
       this.stats.recent.coldTotal
     );
-    this.fillAggregatedStats("aggregated7days", this.stats.last7Days);
+    this.fillAggregatedStats("aggThisWeek", this.stats.thisWeek);
+    this.fillAggregatedStats("aggPrevWeek", this.stats.previousWeek);
   };
 
   handleHotBtnClick = () => {

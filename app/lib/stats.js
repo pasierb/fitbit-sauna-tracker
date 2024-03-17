@@ -4,6 +4,19 @@ const duration12Hours = 60 * 60 * 12 * 1000;
 const duration7Days = 60 * 60 * 24 * 7 * 1000;
 const duration30Days = 60 * 60 * 24 * 30 * 1000;
 
+/**
+ * @param {Date} date
+ * @param {0 | 1} weekStartDay - 0 for Sunday, 1 for Monday
+ */
+function startOfWeek(date, weekStartDay) {
+  const day = date.getDay();
+  const diff = (day < weekStartDay ? 7 : 0) + day - weekStartDay;
+
+  date.setDate(date.getDate() - diff);
+  date.setHours(0, 0, 0, 0);
+  return date;
+}
+
 class AggregateStats {
   /**
    *
@@ -33,6 +46,28 @@ export class Stats {
    */
   constructor(store) {
     this.store = store;
+  }
+
+  get thisWeek() {
+    const start = startOfWeek(new Date(), 0);
+    return new AggregateStats(
+      this.store.measurements.filter(
+        (measurement) => measurement.startedAt > start.getTime()
+      )
+    );
+  }
+
+  get previousWeek() {
+    const start = startOfWeek(new Date(), 0);
+    start.setDate(start.getDate() - 7);
+    const end = new Date(start);
+    end.setDate(end.getDate() + 7);
+
+    return new AggregateStats(
+      this.store.measurements.filter(
+        (measurement) => measurement.startedAt > start.getTime() && measurement.startedAt < end.getTime()
+      )
+    );
   }
 
   /**
