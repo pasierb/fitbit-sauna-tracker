@@ -1,3 +1,4 @@
+import { firstDayOfWeek } from "user-settings";
 import { Store } from "./store";
 
 const duration12Hours = 60 * 60 * 12 * 1000;
@@ -6,9 +7,9 @@ const duration30Days = 60 * 60 * 24 * 30 * 1000;
 
 /**
  * @param {Date} date
- * @param {0 | 1} weekStartDay - 0 for Sunday, 1 for Monday
  */
-function startOfWeek(date, weekStartDay) {
+function startOfWeek(date) {
+  const weekStartDay = firstDayOfWeek || 0;
   const day = date.getDay();
   const diff = (day < weekStartDay ? 7 : 0) + day - weekStartDay;
 
