@@ -1,12 +1,8 @@
 import { Store } from "./store";
 
-/**
- * @type {number} - The maximum time in seconds to look back for recent measurements.
- */
-const maxLookupTimeInSeconds = 60 * 60 * 3; // 3 hours.
-
-const duration7Days = 60 * 60 * 24 * 7 * 1000;
 const duration12Hours = 60 * 60 * 12 * 1000;
+const duration7Days = 60 * 60 * 24 * 7 * 1000;
+const duration30Days = 60 * 60 * 24 * 30 * 1000;
 
 class AggregateStats {
   /**
@@ -39,17 +35,24 @@ export class Stats {
     this.store = store;
   }
 
-  get now() {
-    return Date.now();
-  }
-
   /**
    * @type {AggregateStats}
    */
   get last7Days() {
     return new AggregateStats(
       this.store.measurements.filter(
-        (measurement) => measurement.startedAt > this.now - duration7Days
+        (measurement) => measurement.startedAt > Date.now() - duration7Days
+      )
+    );
+  }
+
+  /**
+   * @type {AggregateStats}
+   */
+  get last30Days() {
+    return new AggregateStats(
+      this.store.measurements.filter(
+        (measurement) => measurement.startedAt > Date.now() - duration30Days
       )
     );
   }
@@ -60,7 +63,7 @@ export class Stats {
   get recent() {
     return new AggregateStats(
       this.store.measurements.filter(
-        (measurement) => measurement.startedAt > this.now - duration12Hours
+        (measurement) => measurement.startedAt > Date.now() - duration12Hours
       )
     );
   }

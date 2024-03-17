@@ -1,6 +1,6 @@
 import document from "document";
 import { View } from "./baseView";
-import { Timer } from "../lib/timer";
+import { Timer, calculateElapsedSeconds } from "../lib/timer";
 import { formatElapsedTime } from "../lib/formatting";
 
 /**
@@ -27,12 +27,25 @@ export class TimerView extends View {
       .getElementById("stopBtn")
       .addEventListener("click", this.handleStopBtnClick);
 
-    this.startTimer();
+    const activeMeasurement = this.appState.store.activeMeasurement;
+    if (activeMeasurement) {
+      this.startTimer(activeMeasurement.startedAt);
+    } else {
+      this.startTimer();
+    }
   };
 
-  startTimer = () => {
+  startTimer = (maybeStartedAt) => {
     this.udpateTimer(0);
-    this.timer.start(this.udpateTimer);
+    this.startedAt = this.timer.start(this.udpateTimer, maybeStartedAt);
+    if (maybeStartedAt) {
+      return;
+    }
+
+    this.appState.store.storeMeasurement({
+      startedAt: this.startedAt,
+      measurementType: this.measurementType,
+    });
   };
 
   udpateTimer = (elapsed) => {
@@ -41,8 +54,9 @@ export class TimerView extends View {
 
   handleStopBtnClick = () => {
     const total = this.timer.stop();
-    this.appState.store.storeMeasurement({
+    this.appState.store.updateMeasurement(this.startedAt, {
       startedAt: total.startedAt,
+      stoppedAt: total.stoppedAt,
       totalElapsedSeconds: total.totalElapsedSeconds,
       measurementType: this.measurementType,
     });

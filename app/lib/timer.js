@@ -6,16 +6,32 @@
  *
  */
 
+/**
+ *
+ * @param {number} startedAt
+ * @param {number} stoppedAt
+ * @returns {number} seconds from startedAt to stoppedAt
+ */
+export function calculateElapsedSeconds(startedAt, stoppedAt) {
+  return Math.floor((stoppedAt - startedAt) / 1000);
+}
+
 export class Timer {
   constructor() {}
 
-  start = (callback) => {
+  /**
+   *
+   * @param {*} callback
+   * @returns {number} startedAt
+   */
+  start = (callback, startedAt) => {
     if (this.intervalId) {
       clearInterval(this.intervalId);
     }
 
-    this.startedAt = Date.now();
+    this.startedAt = startedAt || Date.now();
     this.intervalId = setInterval(this.handleTick.bind(this, callback), 1000);
+    return this.startedAt;
   };
 
   /**
@@ -40,6 +56,6 @@ export class Timer {
   };
 
   calculateElapsed = (dateTo) => {
-    return Math.floor((dateTo - this.startedAt) / 1000);
+    return calculateElapsedSeconds(this.startedAt, dateTo);
   };
 }

@@ -1,5 +1,4 @@
 import { readFileSync, existsSync, writeFileSync } from "fs";
-import { peerSocket } from "messaging";
 
 const fileName = "measurements.json";
 
@@ -11,16 +10,24 @@ if (!existsSync(fileName)) {
  * @typedef {Object} Measurement
  * @property {number} totalElapsedSeconds
  * @property {number} startedAt
+ * @property {number} stoppedAt
  * @property {"hot" | "cold"} measurementType
  * @property {boolean} isSynced - Whether or not the measurement has been synced to the server
  */
 
 /**
- * @param {Measurement} measurement
- * @returns {boolean}
+ * @param {Measurement[]} measurements
+ * @param {number} startedAt
+ * @returns {number} index of the measurement
  */
-function isMeasurementRecent(measurement) {
-  return Date.now() - measurement.startedAt < maxLookupTimeInSeconds * 1000;
+function findMeasurementIndex(measurements, startedAt) {
+  for (let i = measurements.length - 1; i >= 0; i--) {
+    if (measurements[i].startedAt === startedAt) {
+      return i;
+    }
+  }
+
+  return -1;
 }
 
 export class Store {
@@ -31,19 +38,41 @@ export class Store {
     this.measurements = JSON.parse(readFileSync(fileName, "json"));
   }
 
+  get activeMeasurement() {
+    const lastIndex = this.measurements.length - 1;
+
+    if (lastIndex < 0 || !!this.measurements[lastIndex].stoppedAt) {
+      return null;
+    }
+
+    return this.measurements[lastIndex];
+  }
+
   /**
-   *
    * @param {Measurement} measurement
    */
   storeMeasurement = (measurement) => {
     this.measurements.push(measurement);
-    writeFileSync(fileName, JSON.stringify(this.measurements), "json");
+    this.syncToDevice();
+  };
+
+  /**
+   * @param {number} startedAt
+   * @param {Measurement} measurement
+   * @returns {Measurement}
+   */
+  updateMeasurement = (startedAt, measurement) => {
+    const index = findMeasurementIndex(this.measurements, startedAt);
+    if (index < 0) {
+      throw new Error("Measurement not found");
+    }
+    this.measurements[index] = measurement;
+    this.syncToDevice();
+    return this.measurements[index];
   };
 
   syncToDevice = () => {
-    if (peerSocket.readyState === peerSocket.OPEN) {
-      peerSocket.send(this.measurements);
-    }
+    writeFileSync(fileName, JSON.stringify(this.measurements), "json");
   };
 }
 

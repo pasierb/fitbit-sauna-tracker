@@ -4,6 +4,10 @@ import { Stats } from "../lib/stats";
 import { formatElapsedTime } from "../lib/formatting";
 
 export class MainView extends View {
+  /**
+   *
+   * @param {import("../appState").AppState} appState
+   */
   constructor(appState) {
     super("main.view");
     this.appState = appState;
@@ -11,6 +15,8 @@ export class MainView extends View {
   }
 
   onMount = () => {
+    this.maybeRestoreMeasurement(this.appState.store.activeMeasurement);
+
     document
       .getElementById("hotBtn")
       .addEventListener("click", this.handleHotBtnClick);
@@ -31,5 +37,26 @@ export class MainView extends View {
 
   handleColdBtnClick = () => {
     this.appState.changeView("timerCold");
+  };
+
+  /**
+   *
+   * @param {import("../lib/store").Measurement} measurement
+   */
+  maybeRestoreMeasurement = (measurement) => {
+    if (!measurement) {
+      return;
+    }
+
+    switch (measurement.measurementType) {
+      case "hot":
+        this.appState.changeView("timerHot");
+        break;
+      case "cold":
+        this.appState.changeView("timerCold");
+        break;
+      default:
+        break;
+    }
   };
 }

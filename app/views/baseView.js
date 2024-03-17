@@ -7,6 +7,9 @@ export class View {
 
   onMount = () => {};
 
+  /**
+   * @returns {Promise<void>}
+   */
   mount = () => {
     return document.location.assign(this.viewPath).then(() => {
       this.onMount();

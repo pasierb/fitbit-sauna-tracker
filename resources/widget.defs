@@ -6,5 +6,24 @@
     <link rel="import" href="/mnt/sysassets/widgets/icon_button.defs" />
     <link rel="import" href="/mnt/sysassets/widgets/baseview_widget.defs" />
     <link rel="import" href="/mnt/sysassets/widgets/scrollview_widget.defs" />
+
+    <symbol id="measurement-stat">
+      <circle cx="16" cy="-12" r="16" class="hot-fill" />
+      <text id="hotTotal" x="36" y="0" fill="white" class="p1">11:23</text>
+    </symbol>
+
+    <symbol id="aggregated-stats">
+      <svg class="horizontal-pad">
+        <text fill="gray" y="0" class="p2">Last 7 days</text>
+        <section width="50%" x="0" y="30">
+          <circle cx="16" cy="-12" r="16" class="hot-fill" />
+          <text id="hotTotal" x="36" y="0" fill="white" class="p1">11:23</text>
+        </section>
+        <section width="50%" x="50%" y="30">
+          <circle cx="16" cy="-12" r="16" class="cold-fill" />
+          <text id="coldTotal" x="36" y="0" fill="white" class="p1">01:23</text>
+        </section>
+      </svg>
+    </symbol>
   </defs>
 </svg>

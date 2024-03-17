@@ -21,16 +21,16 @@
   x: 10%;
 }
 
-#hotBtn {
+.hot-fill {
   fill: salmon;
+}
+
+.cold-fill {
+  fill: skyblue;
 }
 
 #hotBtn #image {
   href: "icons/sauna_icon.png";
-}
-
-#coldBtn {
-  fill: skyblue;
 }
 
 #coldBtn #image {
