@@ -1,6 +1,13 @@
 <svg id="timerView" class="full-size" viewport-fill="black">
-  <use id="stopBtn" href="#icon-button" x="50% - 66" y="50% - 66"
-    class="extra-large-button" />
+  <use id="cancelBtn"
+      href="#icon-button"
+      x="80% - 36" y="20% - 36"
+      class="medium-button" />
+
+  <use id="stopBtn"
+      href="#icon-button"
+      x="50% - 66" y="50% - 66"
+      class="extra-large-button" />
 
   <text id="status"
     class="center-text p1"

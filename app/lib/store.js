@@ -71,6 +71,15 @@ export class Store {
     return this.measurements[index];
   };
 
+  deleteMeasurement = (startedAt) => {
+    const index = findMeasurementIndex(this.measurements, startedAt);
+    if (index < 0) {
+      throw new Error("Measurement not found");
+    }
+    this.measurements.splice(index, 1);
+    this.syncToDevice();
+  };
+
   syncToDevice = () => {
     writeFileSync(fileName, JSON.stringify(this.measurements), "json");
   };

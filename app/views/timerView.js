@@ -26,6 +26,9 @@ export class TimerView extends View {
     document
       .getElementById("stopBtn")
       .addEventListener("click", this.handleStopBtnClick);
+    document
+      .getElementById("cancelBtn")
+      .addEventListener("click", this.handleCancelButtonClick);
 
     const activeMeasurement = this.appState.store.activeMeasurement;
     if (activeMeasurement) {
@@ -60,6 +63,12 @@ export class TimerView extends View {
       totalElapsedSeconds: total.totalElapsedSeconds,
       measurementType: this.measurementType,
     });
+    this.appState.changeView("main");
+  };
+
+  handleCancelButtonClick = () => {
+    // TODO: Consider adding a confirmation dialog.
+    this.appState.store.deleteMeasurement(this.startedAt);
     this.appState.changeView("main");
   };
 }

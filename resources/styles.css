@@ -44,3 +44,11 @@
 #stopBtn #image {
   href: "icons/stop-button.png";
 }
+
+#cancelBtn {
+  fill: darkgray;
+}
+
+#cancelBtn #image {
+  href: "icons/delete.png";
+}
