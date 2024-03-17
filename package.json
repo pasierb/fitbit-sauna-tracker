@@ -11,7 +11,7 @@
     "appUUID": "d757a093-bec5-4ae8-8abc-5f9f4cc77971",
     "appType": "app",
     "appDisplayName": "SaunaTracker",
-    "iconFile": "resources/icon.png",
+    "iconFile": "resources/icons/app_icon.png",
     "wipeColor": "#ffffff",
     "requestedPermissions": [],
     "buildTargets": [

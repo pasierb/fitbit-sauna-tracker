@@ -29,6 +29,7 @@ export class MainView extends View {
     document.getElementById("coldTotal").text = formatElapsedTime(
       this.stats.recent.coldTotal
     );
+    this.fillAggregatedStats("aggregated7days", this.stats.last7Days);
   };
 
   handleHotBtnClick = () => {
@@ -58,5 +59,21 @@ export class MainView extends View {
       default:
         break;
     }
+  };
+
+  /**
+   *
+   * @param {String} id - The id of the element to fill
+   * @param {import("../lib/stats").Stats} stats - The stats to fill the element with
+   */
+  fillAggregatedStats = (id, stats) => {
+    const container = document.getElementById(id);
+
+    container.getElementsByClassName("hotTotal")[0].text = formatElapsedTime(
+      stats.hotTotal
+    );
+    container.getElementsByClassName("coldTotal")[0].text = formatElapsedTime(
+      stats.coldTotal
+    );
   };
 }
